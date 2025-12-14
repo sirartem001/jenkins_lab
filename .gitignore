@@ -1,0 +1,4 @@
+ansible_deploy/
+python_api/
+jenkins_data/
+.DS_Store

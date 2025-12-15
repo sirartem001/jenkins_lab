@@ -98,7 +98,7 @@ services:
     container_name: registry
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      - "5002:5000"
     environment:
       - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/data
     volumes:
@@ -119,25 +119,31 @@ services:
   #  networks:
   #    - cicd-network
   jenkins_slave1:
-    build: 
+    build:
       context: .
-      dockerfile: ./dockerfileCentOS
+      dockerfile: Dockerfile
     container_name: jenkins_slave1
     ports:
       - "3333:22"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - cicd-network
+
+
   jenkins_slave2:
-    build: 
+    build:
       context: .
-      dockerfile: ./dockerfileCentOS
+      dockerfile: Dockerfile
     container_name: jenkins_slave2
-    networks:
-      - cicd-network
     ports:
       - "4444:22"
-      
-  
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - cicd-network
+
+
 volumes:
   jenkins_data:
   sonarqube_data:

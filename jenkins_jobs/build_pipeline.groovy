@@ -1,46 +1,45 @@
 pipeline {
-    agent any
+    agent { label 'slave-1' }
 
     environment {
-        DOCKER_REGISTRY_URL = "localhost:5000" 
+        REGISTRY = "registry:5000"
         IMAGE_NAME = "python-api"
-        IMAGE_TAG = "latest" 
+        IMAGE_TAG = "latest"
+        FULL_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
     }
 
     stages {
-        stage('Git Clone') {
+
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/sirartem001/python_api.git', branch: 'main'
+                git branch: 'main',
+                    url: 'https://github.com/sirartem001/python_api'
             }
         }
 
-        stage('Install Dependencies & Run Tests') {
+        stage('Build image (with tests)') {
             steps {
-                sh """
-                python -m venv venv
-                . venv/bin/activate
-                pip install -r requirements.txt
-                pytest
-                """
+                sh '''
+                  docker build -t $FULL_IMAGE .
+                '''
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Push image') {
             steps {
-                script {
-                    def fullImageName = "${DOCKER_REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker build -t ${fullImageName} ."
-                }
+                sh '''
+                  docker push $FULL_IMAGE
+                '''
             }
         }
+    }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    def fullImageName = "${DOCKER_REGISTRY_URL}/${IMAGE_NAME}:${IMAGE_TAG}"
-                    sh "docker push ${fullImageName}"
-                }
-            }
+    post {
+        success {
+            echo "✅ Build & tests passed"
+        }
+        failure {
+            echo "❌ Pipeline failed"
         }
     }
 }

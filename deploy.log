@@ -1,0 +1,65 @@
+Started by user Абдрахимов Артем Александрович
+
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on slave-2
+ in /home/jenkins/workspace/deploy
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Git Clone Ansible Repo)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning repository https://github.com/sirartem001/ansible_deploy.git
+ > git init /home/jenkins/workspace/deploy # timeout=10
+Fetching upstream changes from https://github.com/sirartem001/ansible_deploy.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/sirartem001/ansible_deploy.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/sirartem001/ansible_deploy.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision 97f87734fcddf7fd61ba83317cdf5b53e254ddef (refs/remotes/origin/main)
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 97f87734fcddf7fd61ba83317cdf5b53e254ddef # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b main 97f87734fcddf7fd61ba83317cdf5b53e254ddef # timeout=10
+Commit message: "fix"
+ > git rev-list --no-walk 97f87734fcddf7fd61ba83317cdf5b53e254ddef # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Run Ansible Playbook)
+[Pipeline] sh
++ ansible-playbook -i inventory.ini playbook.yml
+
+PLAY [Deploy Python API] *******************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [Pull Docker image from registry] *****************************************
+ok: [localhost]
+
+TASK [Stop and remove existing container] **************************************
+[DEPRECATION WARNING]: The container_default_behavior option will change its 
+default value from "compatibility" to "no_defaults" in community.general 3.0.0.
+ To remove this warning, please specify an explicit value for it now. This 
+feature will be removed from community.general in version 3.0.0. Deprecation 
+warnings can be disabled by setting deprecation_warnings=False in ansible.cfg.
+changed: [localhost]
+
+TASK [Run Docker container] ****************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

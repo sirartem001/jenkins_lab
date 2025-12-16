@@ -1,0 +1,188 @@
+Started by user Абдрахимов Артем Александрович
+
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on slave-1
+ in /home/jenkins/workspace/build
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] git
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Avoid second fetch
+Checking out Revision fe523096367d48d108108de2be7149162a6b658e (refs/remotes/origin/main)
+Commit message: "fix"
+Cloning repository https://github.com/sirartem001/python_api.git
+ > git init /home/jenkins/workspace/build # timeout=10
+Fetching upstream changes from https://github.com/sirartem001/python_api.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.34.1'
+ > git fetch --tags --force --progress -- https://github.com/sirartem001/python_api.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/sirartem001/python_api.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f fe523096367d48d108108de2be7149162a6b658e # timeout=10
+ > git branch -a -v --no-abbrev # timeout=10
+ > git checkout -b main fe523096367d48d108108de2be7149162a6b658e # timeout=10
+ > git rev-list --no-walk fe523096367d48d108108de2be7149162a6b658e # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install dependencies)
+[Pipeline] sh
++ python3 -m pip install --upgrade pip
+Requirement already satisfied: pip in /usr/local/lib/python3.10/dist-packages (25.3)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Pipeline] sh
++ pip3 install -r requirements.txt
+Requirement already satisfied: Flask==2.2.5 in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 1)) (2.2.5)
+Requirement already satisfied: Werkzeug==2.2.3 in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 2)) (2.2.3)
+Requirement already satisfied: pytest==7.1.2 in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 3)) (7.1.2)
+Requirement already satisfied: pytest-cov==4.1.0 in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 4)) (4.1.0)
+Requirement already satisfied: allure-pytest==2.13.2 in /usr/local/lib/python3.10/dist-packages (from -r requirements.txt (line 5)) (2.13.2)
+Requirement already satisfied: Jinja2>=3.0 in /usr/lib/python3/dist-packages (from Flask==2.2.5->-r requirements.txt (line 1)) (3.0.3)
+Requirement already satisfied: itsdangerous>=2.0 in /usr/local/lib/python3.10/dist-packages (from Flask==2.2.5->-r requirements.txt (line 1)) (2.2.0)
+Requirement already satisfied: click>=8.0 in /usr/local/lib/python3.10/dist-packages (from Flask==2.2.5->-r requirements.txt (line 1)) (8.3.1)
+Requirement already satisfied: MarkupSafe>=2.1.1 in /usr/local/lib/python3.10/dist-packages (from Werkzeug==2.2.3->-r requirements.txt (line 2)) (3.0.3)
+Requirement already satisfied: attrs>=19.2.0 in /usr/local/lib/python3.10/dist-packages (from pytest==7.1.2->-r requirements.txt (line 3)) (25.4.0)
+Requirement already satisfied: iniconfig in /usr/local/lib/python3.10/dist-packages (from pytest==7.1.2->-r requirements.txt (line 3)) (2.3.0)
+Requirement already satisfied: packaging in /usr/lib/python3/dist-packages (from pytest==7.1.2->-r requirements.txt (line 3)) (21.3)
+Requirement already satisfied: pluggy<2.0,>=0.12 in /usr/local/lib/python3.10/dist-packages (from pytest==7.1.2->-r requirements.txt (line 3)) (1.6.0)
+Requirement already satisfied: py>=1.8.2 in /usr/local/lib/python3.10/dist-packages (from pytest==7.1.2->-r requirements.txt (line 3)) (1.11.0)
+Requirement already satisfied: tomli>=1.0.0 in /usr/local/lib/python3.10/dist-packages (from pytest==7.1.2->-r requirements.txt (line 3)) (2.3.0)
+Requirement already satisfied: coverage>=5.2.1 in /usr/local/lib/python3.10/dist-packages (from coverage[toml]>=5.2.1->pytest-cov==4.1.0->-r requirements.txt (line 4)) (7.13.0)
+Requirement already satisfied: allure-python-commons==2.13.2 in /usr/local/lib/python3.10/dist-packages (from allure-pytest==2.13.2->-r requirements.txt (line 5)) (2.13.2)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Pipeline] sh
++ pip3 install pytest-cov allure-pytest
+Requirement already satisfied: pytest-cov in /usr/local/lib/python3.10/dist-packages (4.1.0)
+Requirement already satisfied: allure-pytest in /usr/local/lib/python3.10/dist-packages (2.13.2)
+Requirement already satisfied: pytest>=4.6 in /usr/local/lib/python3.10/dist-packages (from pytest-cov) (7.1.2)
+Requirement already satisfied: coverage>=5.2.1 in /usr/local/lib/python3.10/dist-packages (from coverage[toml]>=5.2.1->pytest-cov) (7.13.0)
+Requirement already satisfied: allure-python-commons==2.13.2 in /usr/local/lib/python3.10/dist-packages (from allure-pytest) (2.13.2)
+Requirement already satisfied: attrs>=16.0.0 in /usr/local/lib/python3.10/dist-packages (from allure-python-commons==2.13.2->allure-pytest) (25.4.0)
+Requirement already satisfied: pluggy>=0.4.0 in /usr/local/lib/python3.10/dist-packages (from allure-python-commons==2.13.2->allure-pytest) (1.6.0)
+Requirement already satisfied: tomli in /usr/local/lib/python3.10/dist-packages (from coverage[toml]>=5.2.1->pytest-cov) (2.3.0)
+Requirement already satisfied: iniconfig in /usr/local/lib/python3.10/dist-packages (from pytest>=4.6->pytest-cov) (2.3.0)
+Requirement already satisfied: packaging in /usr/lib/python3/dist-packages (from pytest>=4.6->pytest-cov) (21.3)
+Requirement already satisfied: py>=1.8.2 in /usr/local/lib/python3.10/dist-packages (from pytest>=4.6->pytest-cov) (1.11.0)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Unit tests & Coverage)
+[Pipeline] sh
++ pytest --alluredir=allure-results --cov=app --cov-report=xml
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-7.1.2, pluggy-1.6.0
+rootdir: /home/jenkins/workspace/build
+plugins: allure-pytest-2.13.2, cov-4.1.0
+collected 2 items
+
+tests/test_app.py ..                                                     [100%]
+
+---------- coverage: platform linux, python 3.10.12-final-0 ----------
+Coverage XML written to file coverage.xml
+
+
+============================== 2 passed in 0.10s ===============================
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Allure Report)
+[Pipeline] allure
+[build] $ /home/jenkins/tools/ru.yandex.qatools.allure.jenkins.tools.AllureCommandlineInstallation/allure/bin/allure generate /home/jenkins/workspace/build/allure-results -c -o /home/jenkins/workspace/build/allure-report
+Report successfully generated to /home/jenkins/workspace/build/allure-report
+Allure report was successfully generated.
+Archiving Allure report via ArtifactManager…
+Allure artifact archived via ArtifactManager.
+Allure report copied to: /var/jenkins_home/jobs/build/builds/75/allure-report
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install Dependencies)
+[Pipeline] sh
++ python3 -m pip install --upgrade pip
+Requirement already satisfied: pip in /usr/local/lib/python3.10/dist-packages (25.3)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
++ pip3 install flake8 pylint bandit mypy
+Requirement already satisfied: flake8 in /usr/local/lib/python3.10/dist-packages (7.3.0)
+Requirement already satisfied: pylint in /usr/local/lib/python3.10/dist-packages (4.0.4)
+Requirement already satisfied: bandit in /usr/local/lib/python3.10/dist-packages (1.9.2)
+Requirement already satisfied: mypy in /usr/local/lib/python3.10/dist-packages (1.19.1)
+Requirement already satisfied: mccabe<0.8.0,>=0.7.0 in /usr/local/lib/python3.10/dist-packages (from flake8) (0.7.0)
+Requirement already satisfied: pycodestyle<2.15.0,>=2.14.0 in /usr/local/lib/python3.10/dist-packages (from flake8) (2.14.0)
+Requirement already satisfied: pyflakes<3.5.0,>=3.4.0 in /usr/local/lib/python3.10/dist-packages (from flake8) (3.4.0)
+Requirement already satisfied: astroid<=4.1.dev0,>=4.0.2 in /usr/local/lib/python3.10/dist-packages (from pylint) (4.0.2)
+Requirement already satisfied: dill>=0.2 in /usr/local/lib/python3.10/dist-packages (from pylint) (0.4.0)
+Requirement already satisfied: isort!=5.13,<8,>=5 in /usr/local/lib/python3.10/dist-packages (from pylint) (7.0.0)
+Requirement already satisfied: platformdirs>=2.2 in /usr/local/lib/python3.10/dist-packages (from pylint) (4.5.1)
+Requirement already satisfied: tomli>=1.1 in /usr/local/lib/python3.10/dist-packages (from pylint) (2.3.0)
+Requirement already satisfied: tomlkit>=0.10.1 in /usr/local/lib/python3.10/dist-packages (from pylint) (0.13.3)
+Requirement already satisfied: typing-extensions>=4 in /usr/local/lib/python3.10/dist-packages (from astroid<=4.1.dev0,>=4.0.2->pylint) (4.15.0)
+Requirement already satisfied: PyYAML>=5.3.1 in /usr/lib/python3/dist-packages (from bandit) (5.4.1)
+Requirement already satisfied: stevedore>=1.20.0 in /usr/local/lib/python3.10/dist-packages (from bandit) (5.6.0)
+Requirement already satisfied: rich in /usr/local/lib/python3.10/dist-packages (from bandit) (14.2.0)
+Requirement already satisfied: mypy_extensions>=1.0.0 in /usr/local/lib/python3.10/dist-packages (from mypy) (1.1.0)
+Requirement already satisfied: pathspec>=0.9.0 in /usr/local/lib/python3.10/dist-packages (from mypy) (0.12.1)
+Requirement already satisfied: librt>=0.6.2 in /usr/local/lib/python3.10/dist-packages (from mypy) (0.7.4)
+Requirement already satisfied: markdown-it-py>=2.2.0 in /usr/local/lib/python3.10/dist-packages (from rich->bandit) (4.0.0)
+Requirement already satisfied: pygments<3.0.0,>=2.13.0 in /usr/local/lib/python3.10/dist-packages (from rich->bandit) (2.19.2)
+Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.10/dist-packages (from markdown-it-py>=2.2.0->rich->bandit) (0.1.2)
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Static Code Analysis)
+[Pipeline] sh
++ pylint .
+************* Module app
+app.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+app.py:6:0: C0116: Missing function or method docstring (missing-function-docstring)
+app.py:10:0: C0116: Missing function or method docstring (missing-function-docstring)
+************* Module tests.test_app
+tests/test_app.py:1:0: C0114: Missing module docstring (missing-module-docstring)
+tests/test_app.py:5:0: C0116: Missing function or method docstring (missing-function-docstring)
+tests/test_app.py:7:30: W0621: Redefining name 'client' from outer scope (line 5) (redefined-outer-name)
+tests/test_app.py:10:21: W0621: Redefining name 'client' from outer scope (line 5) (redefined-outer-name)
+tests/test_app.py:16:22: W0621: Redefining name 'client' from outer scope (line 5) (redefined-outer-name)
+
+------------------------------------------------------------------
+Your code has been rated at 6.36/10 (previous run: 6.36/10, +0.00)
+
++ true
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build Docker image)
+Stage "Build Docker image" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push Docker image)
+Stage "Push Docker image" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] cleanWs
+[WS-CLEANUP] Deleting project workspace...
+[WS-CLEANUP] Deferred wipeout is used...
+[WS-CLEANUP] done
+[Pipeline] echo
+✅ Pipeline succeeded
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

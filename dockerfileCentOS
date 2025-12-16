@@ -9,18 +9,22 @@ RUN apt-get update && apt-get install -y \
     git \
     python3 \
     python3-pip \
-    python3-venv \
-    && rm -rf /var/lib/apt/lists/*
+    ansible \
+    && apt-get clean
 
-RUN mkdir /var/run/sshd
+RUN pip3 install --no-cache-dir docker
 
-RUN useradd -m -s /bin/bash jenkins \
- && echo "jenkins:jenkins" | chpasswd \
- && usermod -aG docker jenkins
+RUN mkdir -p /var/run/sshd
 
-RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config \
- && sed -i 's@session\s\+required\s\+pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
+RUN useradd -m -s /bin/bash jenkins && \
+    echo "jenkins:jenkins" | chpasswd && \
+    echo "root:root" | chpasswd
+
+RUN sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    sed -i 's@session\s\+required\s\+pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd && \
+    sed -i 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config || true
 
 EXPOSE 22
-
+USER root
 CMD ["/usr/sbin/sshd", "-D"]
